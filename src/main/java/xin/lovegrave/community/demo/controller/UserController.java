@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xin.lovegrave.community.demo.cache.ehcache.EhCacheServiceImpl;
+import xin.lovegrave.community.demo.cache.redis.RedisServiceImpl;
 import xin.lovegrave.community.demo.pojo.TUser;
 import xin.lovegrave.community.demo.service.UserService;
 
@@ -14,6 +15,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RedisServiceImpl redisService;
     @Autowired
     private EhCacheServiceImpl ehCacheService;
 
@@ -37,5 +40,9 @@ public class UserController {
         return ehCacheService.getValue("users","huang");
     }
 
+    @RequestMapping("/set")
+    public void set(String key,String value){
+        redisService.set(key,value);
+    }
 
 }
